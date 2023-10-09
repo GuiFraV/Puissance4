@@ -2,8 +2,8 @@ import { describe, beforeEach, expect, it } from 'vitest'
 import { interpret, InterpreterFrom } from 'xstate'
 import { GameMachine, GameModel } from '../../src/machine/GameMachine'
 
-describe("machine/guards", () => {
-    describe("canJoinGame", () => {
+describe("machine/GameMachine", () => {
+    describe("join", () => {
         let machine: InterpreterFrom<typeof GameMachine>
 
         beforeEach(() => {
@@ -12,6 +12,9 @@ describe("machine/guards", () => {
 
         it('should let a player join', () => {
             expect(machine.send(GameModel.events.join('1', '1')).changed).toBe(true)
+            expect(machine.state.context.players).toHaveLength(1)
+            expect(machine.send(GameModel.events.join('2', '2')).changed).toBe(true)
+            expect(machine.state.context.players).toHaveLength(2)
         })
 
         it('should not let me join twice', () => {
@@ -19,4 +22,8 @@ describe("machine/guards", () => {
             expect(machine.send(GameModel.events.join('1', '1')).changed).toBe(false)
         })
     })
+})
+
+describe("dropToken", () => {
+
 })
