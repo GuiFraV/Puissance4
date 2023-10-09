@@ -1,4 +1,4 @@
-import { GameContext, Player } from "../types"
+import { GameContext, GridState, Player, PlayerColor } from "../types"
 
 export function freePositionY(grid: GridState, x: number): number {
     for (let y = grid.length - 1; y >= 0; y--) {
@@ -10,7 +10,7 @@ export function freePositionY(grid: GridState, x: number): number {
     return -1
 }
 
-export function winingPositions(grid; GridState, color: PlayerColor, x: number, size: number) {
+export function winingPositions(grid: GridState, color: PlayerColor, x: number, size: number) {
     const directions = [
         [1, 0],
         [0, 1],
@@ -30,7 +30,7 @@ export function winingPositions(grid; GridState, color: PlayerColor, x: number, 
             for (let i = 1; i < size; i++) {
                 const x = position.x + (i * direction[0] * forward)
                 const y = position.y + (i * direction[1] * forward)
-                if (grid[y][x] !== color) {
+                if (grid?.[y]?.[x] !== color) {
                     break;
                 }
                 items.push({ x, y })
