@@ -44,7 +44,7 @@ export const saveWiningPositions: GameAction<"dropToken"> = (context, event) => 
 
 })
 
-export const restartAction: GameAction<"restart"> = (context) => ({
+export const restartAction: GameAction<"restart"> = () => ({
     winingPositions: [],
     grid: GameModel.initialContext.grid,
     currentPlayer: null

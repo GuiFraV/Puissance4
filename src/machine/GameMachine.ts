@@ -1,4 +1,3 @@
-import { createMachine } from 'xstate'
 import { createModel } from 'xstate/lib/model'
 import { GridState, Player, PlayerColor, GameContext, GameStates, Position } from '../types'
 import { canChooseColorGuard, canDropGuard, canJoinGuard, canLeaveGuard, canStartGameGuard, isDrawMoveGuard, isWiningMoveGuard } from './guard'

@@ -19,7 +19,7 @@ export const isDrawMoveGuard: GameGuard<'dropToken'> = (context, event) => {
     return canDropGuard(context, event) && countEmptyCells(context.grid) <= 1
 }
 
-export const canStartGameGuard: GameGuard<"start"> = (context, event) => {
+export const canStartGameGuard: GameGuard<"start"> = (context) => {
     return context.players.filter(p => p.color).length === 2
 }
 
