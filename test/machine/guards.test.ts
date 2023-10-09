@@ -49,8 +49,21 @@ describe("dropToken", () => {
         ]
     })
 
+    // Why the test failed here ? 
     it('should let me drop a token', () => {
-        expect(canDropGuard(machine.state.context, GameModel.events.dropToken('1', 0))).toBe(true)
+        expect(machine.send(GameModel.events.dropToken('1', 0)).changed).toBe(true)
         expect(machine.state.context.grid[5][0]).toBe(PlayerColor.RED)
+        expect(machine.state.value).toBe(GameStates.PLAY)
+        expect(machine.state.context.currentPlayer).toBe("2")
+    })
+
+
+    it('should not let me drop the token on filled column', () => {
+        expect(machine.send(GameModel.events.dropToken('1', 6)).changed).toBe(false)
+    })
+
+    it('should make me win', () => {
+        expect(machine.send(GameModel.events.dropToken('1', 5)).changed).toBe(true)
+        expect(machine.state.value).toBe(GameStates.VICTORY)
     })
 })

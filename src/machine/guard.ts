@@ -26,3 +26,7 @@ export const canDropGuard: GameGuard<"dropToken"> = (context, event) => {
         freePositionY(context.grid, event.x) >= 0
 
 }
+
+export const isWiningMoveGuard: GameGuard<"dropToken"> = (context, event) => {
+    return canDropGuard(context, event) && winingPositions(context.grid,)
+}
