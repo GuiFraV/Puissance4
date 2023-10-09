@@ -1,16 +1,9 @@
 import { createMachine } from 'xstate'
 import { createModel } from 'xstate/lib/model'
-import { GridState, Player, PlayerColor, GameContext } from '../types'
+import { GridState, Player, PlayerColor, GameContext, GameStates } from '../types'
 import { canJoinGuard, canLeaveGuard } from './guard'
 import { joinGameAction, leaveGameAction } from './actions'
 import { interpret, InterpreterFrom } from 'xstate'
-
-enum GameStates {
-    LOBBY = "LOBBY",
-    PLAY = 'PLAY',
-    VICTORY = 'VICTORY',
-    DRAW = 'DRAW',
-}
 
 export const GameModel = createModel({
     players: [] as Player[],

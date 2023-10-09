@@ -1,6 +1,8 @@
 import { describe, beforeEach, expect, it } from 'vitest'
 import { interpret, InterpreterFrom } from 'xstate'
-import { GameMachine, GameModel } from '../../src/machine/GameMachine'
+import { GameMachine, GameModel, makeGame } from '../../src/machine/GameMachine'
+import { GameStates, PlayerColor } from '../../src/types'
+import { canDropGuard } from '../../src/machine/guard'
 
 describe("machine/GameMachine", () => {
     describe("join", () => {
@@ -26,4 +28,29 @@ describe("machine/GameMachine", () => {
 
 describe("dropToken", () => {
 
+    const machine = makeGame(GameStates.PLAY, {
+        players: [{
+            id: '1',
+            name: '1',
+            color: PlayerColor.RED
+        }, {
+            id: '2',
+            name: '2',
+            color: PlayerColor.YELLOW
+        }],
+        currentPlayer: '1',
+        grid: [
+            ["E", "E", "E", "E", "E", "E", "R"],
+            ["E", "E", "E", "E", "E", "R", "Y"],
+            ["E", "E", "E", "E", "E", "R", "R"],
+            ["E", "E", "E", "E", "E", "R", "Y"],
+            ["E", "E", "E", "E", "E", "Y", "R"],
+            ["E", "E", "E", "E", "E", "Y", "Y"]
+        ]
+    })
+
+    it('should let me drop a token', () => {
+        expect(canDropGuard(machine.state.context, GameModel.events.dropToken('1', 0))).toBe(true)
+        expect(machine.state.context.grid[5][0]).toBe(PlayerColor.RED)
+    })
 })
