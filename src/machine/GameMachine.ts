@@ -1,8 +1,9 @@
 import { createMachine } from 'xstate'
 import { createModel } from 'xstate/lib/model'
-import { GridState, Player, PlayerColor } from '../types'
+import { GridState, Player, PlayerColor, GameContext } from '../types'
 import { canJoinGuard, canLeaveGuard } from './guard'
 import { joinGameAction, leaveGameAction } from './actions'
+import { interpret, InterpreterFrom } from 'xstate'
 
 enum GameStates {
     LOBBY = "LOBBY",
@@ -86,3 +87,15 @@ export const GameMachine = GameModel.createMachine({
 
 
 })
+
+export function makeGame(state: GameStates = GameStates.LOBBY, context: Partial<GameContext> = {}): InterpreterFrom<typeof GameMachine> {
+    return interpret(
+        GameMachine.withContext({
+            ...GameModel.initialContext,
+            ...context
+        }).withConfig({
+            ...GameMachine.config,
+            initial: state
+        } as any)
+    ).start()
+}
