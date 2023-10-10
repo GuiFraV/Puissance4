@@ -5,7 +5,7 @@ function App() {
   return (
     <>
       <div>
-        <NameSelector />
+        <NameSelector onSelect={() => null}/>
       </div>
     </>
   )
