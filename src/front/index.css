@@ -38,3 +38,33 @@ html, bodu {
     height: 20px;
     border-radius: 100%;
 }
+.selector {
+    display: flex;
+    gap: .5rem;
+}
+
+.selecotr .disc {
+    margin: 10px;
+    transform: scale(2);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(var(--cols), 1fr);
+    grid-template-rows: repeat(var(--rows), 1fr);
+    aspect-ratio: var(--cols) / var(--rows);
+    background-color: #336dac;
+    background: radial-gradient(
+        circle, 
+        transparent, 
+        transparent 50%,
+        #336dac 51%, 
+        #336dac 60.01%, 
+        #2a5782 100%
+    );
+    background-size: calc(100% / var(--cols)) calc(100% / var(--rows));
+    border: 15px solid #2a5782;
+    align-items: center;
+    justify-content: center;
+}
+
