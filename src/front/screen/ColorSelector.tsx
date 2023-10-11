@@ -12,9 +12,9 @@ function disColor(color: PlayerColor){
 
 export function ColorSelector({ onSelect, players } : ColorSelectorProps){
     return <div className="players">
-        {players.map(player => <div className="player">
+        {players.map(player => <div key={player.name} className="player">
             {player.name}
-            {player.color && <div className="disc"></div>}
+            {player.color && <div className={disColor(player.color)}></div>}
 
         </div>)}
     </div>

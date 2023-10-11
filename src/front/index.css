@@ -6,3 +6,35 @@ html, bodu {
     max-width: 600px;
     margin: 0px auto;
 }
+
+.players {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.player {
+    display:flex;
+    align-items: center;
+    gap: .2rem;
+}
+
+.disc {
+    background-color:  #f6db38;
+    box-shadow: inset 0 0 0 3px #c0a91e;
+    border: solod 3px #f6db38;
+    outline: solid 1px #c0a91e;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+}
+
+.disc-red {
+    background-color:  #f63838;
+    box-shadow: inset 0 0 0 3px #c01e1e;
+    border: solod 3px #f63838;
+    outline: solid 1px #c01e1e;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+}
