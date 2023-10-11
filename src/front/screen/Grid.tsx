@@ -39,8 +39,8 @@ type ColumnProps = {
 
 function Column({}: ColumnProps){
 
-    return <div className="column">
+    return <button className="column">
         <div className="disc disc-yellow"></div>
-    </div>
+    </button>
 
 }

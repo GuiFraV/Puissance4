@@ -6,6 +6,11 @@ html, bodu {
     box-sizing: border-box;
 }
 
+button {
+    border: none;
+    background: none; 
+    padding: 0;
+}
 .container {
     max-width: 600px;
     margin: 0px auto;
@@ -109,9 +114,13 @@ html, bodu {
 }
 
 .column .disc {
-    display: none;
+    opacity: 0;
+    transition: .3s;
+    transform: translateY(-20px)
 }
 
 .column:hover .disc{
-    display: block;
+    opacity: 1;
+    transform: translateY(0px)
+
 }
