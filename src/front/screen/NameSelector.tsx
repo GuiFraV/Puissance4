@@ -2,17 +2,18 @@ import { FormEvent, useState } from "react"
 
 type NameSelectorProps = {
     onSelect: (name:string) => void
+    disabled: boolean
 }
 
 
-export function NameSelector({onSelect}: NameSelectorProps){
+export function NameSelector({onSelect, disabled}: NameSelectorProps){
 
     const [error, setError] = useState('')
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
         const name = new FormData(e.currentTarget as HTMLFormElement).get('name')
-        if(!name || name.toString() === ''){
+        if(!name || name.toString().trim() === ''){
             setError('Vous devez choisir un pseudo')
             return;
         }
@@ -22,15 +23,16 @@ export function NameSelector({onSelect}: NameSelectorProps){
 
 
     return <>
+    <h1>Sélectionner un pseudo</h1>
     {error && 
         <div className='alert'>
             {error}
-            <div className="alert__close">&times;</div>
+            <button onClick={() => setError('')} className="alert__close">&times;</button>
         </div>
     }
         <form action='' onSubmit={handleSubmit}>
             <label htmlFor="name">Votre pseudo</label>
-            <input type='text' id='name' name='name' required></input>
+            <input disabled={disabled} type='text' id='name' name='name' required></input>
 
             <button>Choisir</button>
         </form>
