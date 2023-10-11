@@ -10,10 +10,44 @@ button {
     border: none;
     background: none; 
     padding: 0;
+    margin: 0;
+    cursor: pointer;
 }
+
+label {
+    font: inherit;
+}
+
+input {
+    padding: .7rem 1rem;
+    font: inherit;
+    line-height: 1;
+    border-radius: 5px;
+    border: 1px solid darkgrey;
+}
+
+input:disabled{
+    opacity: .4;
+}
+
+.alert {
+    padding: 1rem .75rem;
+    display: flex;
+    justify-content: space-between;
+    color: #721c24;
+    background-color: #f8d7da;
+    border: solid 1px #f5c6cb;
+    border-radius: 5px;
+}
+
 .container {
     max-width: 600px;
     margin: 0px auto;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
 }
 
 .players {
@@ -108,7 +142,6 @@ button {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    border: 1px solid #000;
     width: 100%;
     height: calc(100%  + 100%/ var(--rows));
 }
@@ -116,11 +149,24 @@ button {
 .column .disc {
     opacity: 0;
     transition: .3s;
-    transform: translateY(-20px)
+    transform: translateY(0px)
 }
 
 .column:hover .disc{
     opacity: 1;
-    transform: translateY(0px)
+    transform: translateY(30px)
 
+}
+
+.button {
+    background-color: #5e80e7;
+    font: inherit;
+    padding: .7rem 1rem;
+    border-radius: 5px;
+    color: #fff;
+    line-height: 1; 
+}
+
+.button:hover{
+    background-color: #3f60be;
 }

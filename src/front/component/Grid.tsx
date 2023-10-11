@@ -1,19 +1,23 @@
 import { CSSProperties } from "react"
 import { CellState, GridState, PlayerColor } from "../../types"
 import { discColorClass } from "../../func/color"
+import { prevent } from "../../func/dom"
 
 type GridProps = {
-    grid: GridState
+    grid: GridState,
+    color?: PlayerColor,
+    onDrop: (x: number) => void
 }
 
-export function Grid({grid}: GridProps){
+export function Grid({grid, color, onDrop }: GridProps){
     const cols = grid[0].length
+    const showColumns = color && onDrop
     return <div className="grid" style={{'--rows': grid.length, '--cols':grid[0].length} as CSSProperties}>
         {grid.map((row, y) => row.map((c, x) => <Cell x={x} y={y} color={c} key={`${x} - ${y}`} />))}
 
-        <div className="columns">
-            {new Array(cols).fill(1).map((_, k) => <Column key={k}/>)}
-        </div>
+        {showColumns && <div className="columns">
+            {new Array(cols).fill(1).map((_, k) => <Column onDrop={() => onDrop(k)} color={color} key={k}/>)}
+        </div>}
     
     </div>
 }
@@ -25,7 +29,7 @@ type CellProps = {
 }
 
 
-function Cell({x, y, color} : CellProps){
+function Cell({ y, color} : CellProps){
     return <div 
     style={{'--row': y} as CSSProperties}
         className={discColorClass(color)}
@@ -34,13 +38,14 @@ function Cell({x, y, color} : CellProps){
 }
 
 type ColumnProps = {
-
+    color: PlayerColor,
+    onDrop: () => void
 }
 
-function Column({}: ColumnProps){
+function Column({color, onDrop}: ColumnProps){
 
-    return <button className="column">
-        <div className="disc disc-yellow"></div>
+    return <button onClick={prevent(onDrop)} className="column">
+        <div className={discColorClass(color)}></div>
     </button>
 
 }
