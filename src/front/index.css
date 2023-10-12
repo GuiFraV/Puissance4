@@ -132,7 +132,10 @@ input:disabled{
 .grid .disc-yellow,
 .grid .disc-red {
     animation: Drop calc(.20s * var(--row)) both;
+}
 
+.disc-active {
+    border: 8px solid #FFF
 }
 
 @keyframes Drop{

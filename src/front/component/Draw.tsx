@@ -1,4 +1,3 @@
-import { discColorClass } from "../../func/color"
 import { prevent } from "../../func/dom"
 
 type DrawProps = {
