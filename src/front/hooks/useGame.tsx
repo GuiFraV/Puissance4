@@ -24,7 +24,7 @@ export function GameContextProvider({ children }: PropsWithChildren) {
         state: state.value as GameStates,
         context: state.context,
         send: send,
-        can: () => false
+        can: (event: GameEvents) => !!GameMachine.transition(state, event).changed
     })}>
         { children }
         </Context.Provider>
