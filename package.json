@@ -7,6 +7,7 @@
     "dev": "vite",
     "start": "tsx src/server/server.js",
     "start:watch": "nodemon src/server/server.ts",
+    "gen:key": "tsx src/commands/genkey.ts",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
@@ -17,12 +18,14 @@
     "fastify": "^4.24.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "uuid": "^9.0.1",
     "xstate": "^4.38.2"
   },
   "devDependencies": {
     "@types/node": "^20.8.5",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
+    "@types/uuid": "^9.0.5",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react": "^4.0.3",
