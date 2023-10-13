@@ -1,11 +1,21 @@
+import fastifyStatic from '@fastify/static';
 import Fastify from 'fastify'
 import { v4 } from 'uuid'
+import { sign } from './func/crypto';
+import { resolve } from 'path'
 
 const fastify = Fastify({ logger: true })
+fastify.register(fastifyStatic, {
+    root: resolve("./public")
+})
 
-fastify.get('/api/players', (req, res) => {
+fastify.post('/api/players', (req, res) => {
     const playerId = v4();
-    console.log(playerId)
+    const signature = sign(playerId)
+    res.send({
+        playerId: playerId,
+        signature: signature,
+    })
 })
 
 fastify.listen({ port: 8000 }).catch((err) => {
