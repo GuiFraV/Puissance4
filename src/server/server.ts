@@ -5,6 +5,13 @@ import { v4 } from 'uuid'
 import { sign, verify } from './func/crypto';
 import { resolve } from 'path'
 import { ServerErrors } from '../types';
+import { ConnectionRepository } from './repositories/ConnectionRepository';
+import { GameRepository } from './repositories/GameRepository';
+import { GameModel } from '../machine/GameMachine';
+import { publishMachine } from './func/socket';
+
+const connections = new ConnectionRepository()
+const games = new GameRepository(connections)
 
 const fastify = Fastify({ logger: true })
 fastify.register(FastifyStatic, {
@@ -33,18 +40,22 @@ fastify.register(async (f) => {
             return;
         }
 
-        connection.socket.send(
-            JSON.stringify({
-                type: 'gameUpdate',
-            })
-        )
+        const game = games.find(gameId) ?? games.create(gameId)
+        connections.persist(playerId, gameId, connection)
+        game.send(GameModel.events.join(playerId, playerName))
+        publishMachine(game.state, connection)
 
-        connection.socket.on('message', (message: any) => {
-            console.log(message)
+        connection.socket.on('message', (rawMessage) => {
+            const message = JSON.parse(rawMessage.toLocaleString())
+            if (message.type === 'gameUpdate') {
+                game.send(message.event)
+            }
         })
 
         connection.socket.on('close', () => {
-
+            connections.remove(playerId, gameId)
+            game.send(GameModel.events.leave(playerId))
+            games.clean(gameId)
         })
 
     })
