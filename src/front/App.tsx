@@ -1,6 +1,8 @@
+import { useEffect } from "react"
 import { currentPlayer } from "../func/game"
-import { GameStates } from "../types"
+import { GameStates, ServerErrors } from "../types"
 import { Grid } from "./component/Grid"
+import { getSession, logout } from "./func/session"
 import { useGame } from "./hooks/useGame"
 import { DrawScreen } from "./screens/DrawScreen"
 import { LobbyScreen } from "./screens/LobbyScreen"
@@ -16,6 +18,30 @@ function App() {
   const dropToken = canDrop ? (x: number) => {
     send({type: 'dropToken', x: x})
   } : undefined
+
+  useEffect(() => {
+
+    if(playerId){
+      const searchParams = new URLSearchParams({
+        id: playerId,
+        signature: getSession()?.signature!,
+        name: 'John',
+        gameId: 'test'
+      })
+      const socket = new WebSocket(
+        `${window.location.protocol.replace('http', 'ws')}//${window.location.host}/ws?${searchParams.toString()}`
+      )
+
+      socket.addEventListener('message', (event) => {
+        const message = JSON.parse(event.data)
+        if(message.type === 'error' && message.code === ServerErrors.AuthError){
+          logout();
+        }
+      })
+
+    }
+
+  }, [playerId])
 
   if(!playerId){
     return <div className="container">

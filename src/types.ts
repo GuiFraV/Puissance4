@@ -8,6 +8,10 @@ export enum GameStates {
     DRAW = 'DRAW',
 }
 
+export enum ServerErrors {
+    AuthError
+}
+
 export enum PlayerColor {
     RED = 'R',
     YELLOW = 'Y',
