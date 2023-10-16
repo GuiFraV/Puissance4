@@ -61,7 +61,7 @@ fastify.register(async (f) => {
     })
 })
 
-fastify.post('/api/players', (req, res) => {
+fastify.post('/api/players', (_req, res) => {
     const playerId = v4();
     const signature = sign(playerId)
     res.send({
