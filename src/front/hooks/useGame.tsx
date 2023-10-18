@@ -25,7 +25,7 @@ export function useGame(): GameContextType {
 }
 
 export function GameContextProvider({ children }: PropsWithChildren) {
-    const [machine, setMachine] = useState<InterpreterFrom<typeof GameMachine> | null>(null)
+    const [machine, setMachine] = useState<InterpreterFrom<typeof GameMachine>>(makeGame())
     const [playerId, setPlayerId] = useState('')
     const [socket, setSocket] = useState<ReconnectingWebSocket | null>(null)
     const sendWithPlayer = useCallback<GameContextType['send']>((event) => {

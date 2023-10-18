@@ -14,7 +14,7 @@ function App() {
 
   const {state, context, send, playerId} = useGame()
   const canDrop = state === GameStates.PLAY
-  const player = canDrop ? currentPlayer(context) : undefined
+  const player = canDrop ? currentPlayer(context!) : undefined
   const dropToken = canDrop ? (x: number) => {
     send({type: 'dropToken', x: x})
   } : undefined
@@ -34,7 +34,7 @@ function App() {
         {state === GameStates.PLAY && <PlayScreen />}
         {state === GameStates.VICTORY && <VictoryScreen />}
         {state === GameStates.DRAW && <DrawScreen />}
-        <Grid winingPositions={context.winingPositions} grid={context.grid} onDrop={dropToken} color={player?.color}/>
+        {playerId && <Grid winingPositions={context!.winingPositions} grid={context!.grid} onDrop={dropToken} color={player?.color}/>}
 
       </div>
     </>
