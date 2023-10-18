@@ -2,7 +2,7 @@ import { v4 } from "uuid"
 import { PlayerSession, QueryParams } from "../../types"
 import { NameSelector } from "../component/NameSelector"
 import { saveSession } from "../func/session"
-import { urlSearchParams } from "../hooks/url"
+import { updateQueryParams, urlSearchParams } from "../func/url"
 import { useGame } from "../hooks/useGame"
 
 type LoginScreenProps = {
@@ -22,6 +22,7 @@ export function LoginScreen ({}: LoginScreenProps) {
 
         const gameId = urlSearchParams().get(QueryParams.GAMEID) ?? v4()
         connect(player, gameId)
+        updateQueryParams({[QueryParams.GAMEID]: gameId})
 
     }
     return <div>
