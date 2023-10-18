@@ -1,9 +1,11 @@
-import { PropsWithChildren, createContext, useCallback, useContext, useState } from "react"
-import { GameContext, GameEvent, GameEvents, GameStates, Player, PlayerSession } from "../../types"
+import { PropsWithChildren, createContext, useCallback, useContext, useEffect, useState } from "react"
+import { GameContext, GameEvent, GameEvents, GameStates, Player, PlayerSession, QueryParams, ServerErrors } from "../../types"
 import { GameMachine } from "../../machine/GameMachine"
 import { useMachine } from '@xstate/react'
-import { getSession } from "../func/session"
+import { getSession, logout } from "../func/session"
 import ReconnectingWebSocket from "reconnecting-websocket"
+import { urlSearchParams } from "../func/url"
+import { InterpreterFrom } from "xstate"
 
 type GameContextType = {
     state: GameStates,
@@ -23,7 +25,7 @@ export function useGame(): GameContextType {
 }
 
 export function GameContextProvider({ children }: PropsWithChildren) {
-    const [state, send] = useMachine(GameMachine)
+    const [machine, setMachine] = useState<InterpreterFrom<typeof GameMachine> | null>(null)
     const [playerId, setPlayerId] = useState('')
     const [socket, setSocket] = useState<ReconnectingWebSocket | null>(null)
     const sendWithPlayer = useCallback<GameContextType['send']>((event) => send({playerId, ...event} as GameEvents), [playerId])
@@ -39,6 +41,33 @@ export function GameContextProvider({ children }: PropsWithChildren) {
         )
 
         setSocket(socket)
+    }
+
+    useEffect(() => {
+
+        if(!socket){
+            const gameId = urlSearchParams().get(QueryParams.GAMEID)
+            const session = getSession()
+            if(gameId && session){
+                connect(session, gameId)
+                setPlayerId(session.id)
+            }
+            return ;
+        }
+
+        const onMessage = (event: MessageEvent) => {
+            const message = JSON.parse(event.data)
+            if(message.type === 'error' && message.code === ServerErrors.AuthError){
+                logout()
+                setPlayerId('')
+            }else if (message.type === 'gameUpdate')
+        }
+        socket.addEventListener('message', onMessage)
+        return () => {
+            socket.removeEventListener('message', onMessage)
+        }
+        
+    }, [socket])
     
     
     return <Context.Provider value={({
@@ -51,4 +80,4 @@ export function GameContextProvider({ children }: PropsWithChildren) {
     })}>
         { children }
         </Context.Provider>
-}}
+}
