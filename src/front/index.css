@@ -140,7 +140,7 @@ input:disabled{
 
 @keyframes Drop{
     from {
-        transform: translateY(calc(-125% * var(--row)));
+        transform: translateY(calc(-125% * (var(--row)+1) ));
     }
 }
 
@@ -157,6 +157,11 @@ input:disabled{
     align-items: flex-start;
     width: 100%;
     height: calc(100%  + 100%/ var(--rows));
+}
+
+.column:disabled{
+    opacity: 0;
+    pointer-events: none;
 }
 
 .column .disc {
