@@ -19,29 +19,7 @@ function App() {
     send({type: 'dropToken', x: x})
   } : undefined
 
-  useEffect(() => {
 
-    if(playerId){
-      const searchParams = new URLSearchParams({
-        id: playerId,
-        signature: getSession()!.signature!,
-        name: getSession()!.name!,
-        gameId: 'test'
-      })
-      const socket = new WebSocket(
-        `${window.location.protocol.replace('http', 'ws')}//${window.location.host}/ws?${searchParams.toString()}`
-      )
-
-      socket.addEventListener('message', (event) => {
-        const message = JSON.parse(event.data)
-        if(message.type === 'error' && message.code === ServerErrors.AuthError){
-          logout();
-        }
-      })
-
-    }
-
-  }, [playerId])
 
   if(!playerId){
     return <div className="container">

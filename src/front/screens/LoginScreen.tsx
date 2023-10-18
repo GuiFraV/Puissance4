@@ -14,6 +14,7 @@ export function LoginScreen ({}: LoginScreenProps) {
             ...response,
             name
         })
+
     }
     return <div>
         <NameSelector onSelect={handleLogin} />
