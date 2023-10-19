@@ -12,6 +12,7 @@ import { publishMachine } from './func/socket';
 
 const connections = new ConnectionRepository()
 const games = new GameRepository(connections)
+const env = process.env.NODE_ENV as 'dev' | 'prod'
 
 const fastify = Fastify({ logger: true })
 fastify.register(FastifyStatic, {
