@@ -25,7 +25,9 @@
     "react-dom": "^18.2.0",
     "reconnecting-websocket": "^4.4.0",
     "uuid": "^9.0.1",
-    "xstate": "^4.38.2"
+    "xstate": "^4.38.2",
+    "tsx": "^3.13.0",
+    "typescript": "^5.0.2"
   },
   "devDependencies": {
     "@types/node": "^20.8.5",
