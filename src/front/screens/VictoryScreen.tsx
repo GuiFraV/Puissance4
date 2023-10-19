@@ -6,7 +6,7 @@ type VictoryScreenProps = {}
 
 export function VictoryScreen ({} : VictoryScreenProps) {
     const  {context, send} = useGame()
-    const player = currentPlayer(context)
+    const player = currentPlayer(context!)
     const restart = () => send({type: 'restart'})
 
     return <div>

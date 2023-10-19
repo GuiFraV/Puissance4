@@ -1,7 +1,6 @@
 import { prevent } from "../../func/dom"
 import { PlayerColor } from "../../types"
 import { ColorSelector } from "../component/ColorSelector"
-import { NameSelector } from "../component/NameSelector"
 import { useGame } from "../hooks/useGame"
 
 type LobbyScreenProps = {}

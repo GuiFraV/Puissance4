@@ -1,7 +1,6 @@
 import { PropsWithChildren, createContext, useCallback, useContext, useEffect, useState } from "react"
 import { GameContext, GameEvent, GameEvents, GameStates, Player, PlayerSession, QueryParams, ServerErrors } from "../../types"
 import { GameMachine, makeGame } from "../../machine/GameMachine"
-import { useMachine } from '@xstate/react'
 import { getSession, logout } from "../func/session"
 import ReconnectingWebSocket from "reconnecting-websocket"
 import { urlSearchParams } from "../func/url"
