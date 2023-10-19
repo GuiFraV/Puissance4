@@ -15,7 +15,7 @@ import ejs from 'ejs';
 
 const connections = new ConnectionRepository()
 const games = new GameRepository(connections)
-// const env = process.env.NODE_ENV as 'dev' | 'prod'
+const env = process.env.NODE_ENV as 'dev' | 'prod'
 let manifest = {}
 try {
     const manifestData = readFileSync('./public/assets/manifest.json')
@@ -90,11 +90,13 @@ fastify.post('/api/players', (_req, res) => {
     })
 })
 
-fastify.listen({ port: 8000 }).catch((err) => {
+fastify.listen({
+    port: process.env.PORT ? parseInt(process.env.PORT, 10) : 8000,
+    host: '0.0.0.0'
+}).catch((err) => {
     fastify.log.error(err)
     process.exit(1)
 }).then(() => {
     fastify.log.info('Le serveur écoute sur le port 8000')
 })
 
-console.log("hello")
